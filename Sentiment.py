@@ -5,15 +5,15 @@ import tweepy
 from tweepy.streaming import StreamListener
 from tweepy import OAuthHandler
 from tweepy import Stream
-from textblob import TextBlob
-from elasticsearch import Elasticsearch
+#from textblob import TextBlob
+#from elasticsearch import Elasticsearch
 
 
 # import twitter keys and tokens
-from config import *
+#from config import *
 
 # create instance of elasticsearch
-es = Elasticsearch()
+#es = Elasticsearch()
 
 class TweetStreamListener(StreamListener):
 
@@ -76,21 +76,9 @@ if __name__ == '__main__':
     query = "life insurance india"
     max_tweets = 100
 
-    twitterData = [{"tweetID": tweet.id_str, "Text": tweet.text,
-                    "retweetCnt": tweet.retweet_count,
-                    "favCnt": tweet.favorite_count, "source": tweet.source,
-                    "createdAt": tweet.created_at, "userID": tweet.user.id_str,
-                    "userScreenName": tweet.user.screen_name,
-                    "userName": tweet.user.name,
-                    "followersCnt": tweet.user.followers_count,
-                    "friendsCnt": tweet.user.friends_count,
-                    "favCnt": tweet.user.favourites_count,
-                    "timeZone": tweet.user.time_zone,
-                    "location": tweet.user.location}
-                    for tweet in tweepy.Cursor(api.search, q=query,
-                                                lang='en').items(max_tweets)]
-    print twitterData
-    print len(twitterData)
+	for tweet in tweepy.Cursor(api.search, q=query, lang='en').items(max_tweets):
+		print tweet.id_str + "," + tweet.text + "," + tweet.retweet_count + ","  + tweet.favorite_count +","+tweet.source+","+tweet.created_at+","+tweet.user.id_str+","+tweet.user.screen_name+","+tweet.user.name+","+tweet.user.followers_count+","+tweet.user.friends_count+","+tweet.user.favourites_count+","+tweet.user.time_zone+","+tweet.user.location+"\n"
+
     # create instance of the tweepy stream
 
     #stream = Stream(auth, listener)
